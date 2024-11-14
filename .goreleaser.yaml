@@ -47,4 +47,4 @@ brews:
   # This unsets ~/.oh-my-zsh/plugins/git/git.plugin.zsh which
   # contains an alias for gg, only if ~/.zshrc exists
   post_install: |
-    test -f ~/.zshrc && echo 'unalias gg' >> ~/.zshrc
+    system 'test ~/.zshrc && echo "unalias gg" >> ~/.zshrc'
