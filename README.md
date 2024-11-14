@@ -1,5 +1,7 @@
 # GG - a CLI for ticket ping-pong
 
+![CodeQL](https://github.com/bricktopab/gg/actions/workflows/github-code-scanning/codeql/badge.svg) ![Lint](https://github.com/bricktopab/gg/actions/workflows/lint.yml/badge.svg)
+
 Sometimes you just want to fix something, not click through JIRA and copy-paste 
 issue identifiers all over the place. There are better ways but sometimes a cli
 is quicker.
@@ -17,9 +19,9 @@ This tool provides a CLI which:
 * Looks up one of your issues and creates a local branch
 * Creates a PR with naming that matches your ticket
 
-| Command       | Description                                                   |
-|---------------|---------------------------------------------------------------|
-| `gg b`        | Creates a JIRA issue and a local branch with corresponding name|
+| Command       | Description                                                    |
+|---------------|----------------------------------------------------------------|
+| `gg n`        | Creates a JIRA issue and a local branch with corresponding name|
 | `gg i`        | Looks up one of your issues and creates a local branch         |
 | `gg pr`       | Creates a PR with naming that matches your ticket              |
 
