@@ -8,6 +8,7 @@ is quicker.
 
 ## Install
 ```bash
+brew tap bricktopab/gg
 brew install gg
 ```
 
