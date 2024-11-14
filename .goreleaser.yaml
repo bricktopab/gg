@@ -38,11 +38,11 @@ changelog:
 
 brews:
 - name: gg
-  homepage: https://github.com/tommi-l/homebrew-gg
+  homepage: https://github.com/bricktopab/homebrew-gg
   dependencies:
     - name: git
   repository:
-    owner: tommi-l
+    owner: bricktopab
     name: homebrew-gg
   # This unsets ~/.oh-my-zsh/plugins/git/git.plugin.zsh which
   # contains an alias for gg, only if ~/.zshrc exists
