@@ -55,9 +55,11 @@ func main() {
 		},
 		Commands: []*cli.Command{
 			{
-				Name:    "new",
-				Aliases: []string{"n"},
-				Usage:   "Create issue and local branch interactively",
+				Name:      "new",
+				Aliases:   []string{"n"},
+				Args:      true,
+				Usage:     "Create issue and local branch interactively",
+				ArgsUsage: "[issue title] [issue description]",
 				Action: func(cCtx *cli.Context) error {
 					gg.CreateIssue(cCtx.Args().First(), cCtx.Args().Get(1))
 					return nil
