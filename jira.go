@@ -47,23 +47,27 @@ func (j *JiraWrapper) CreateIssue(typeID string, title, description string) *cfg
 			Summary:   title,
 			Project:   &models.ProjectScheme{Key: j.project},
 			IssueType: &models.IssueTypeScheme{ID: typeID},
-			Description: &models.CommentNodeScheme{
-				Type:    "doc",
-				Version: 1,
-				Content: []*models.CommentNodeScheme{
-					{
-						Type: "paragraph",
-						Content: []*models.CommentNodeScheme{
-							{
-								Type: "text",
-								Text: description,
-							},
+		},
+	}
+
+	if description != "" {
+		payload.Fields.Description = &models.CommentNodeScheme{
+			Type:    "doc",
+			Version: 1,
+			Content: []*models.CommentNodeScheme{
+				{
+					Type: "paragraph",
+					Content: []*models.CommentNodeScheme{
+						{
+							Type: "text",
+							Text: description,
 						},
 					},
 				},
 			},
-		},
+		}
 	}
+
 	issue, resp, err := j.client.Issue.Create(context.Background(), payload, nil)
 	if err != nil {
 		log.Fatal("JIRA Error: ", resp.Bytes.String())
