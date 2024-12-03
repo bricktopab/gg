@@ -14,9 +14,9 @@ require (
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/catppuccin/go v0.2.0 // indirect
 	github.com/charmbracelet/bubbles v0.20.0 // indirect
-	github.com/charmbracelet/bubbletea v1.2.2 // indirect
-	github.com/charmbracelet/x/ansi v0.4.5 // indirect
-	github.com/charmbracelet/x/exp/strings v0.0.0-20241110171603-a30b032a5ae2 // indirect
+	github.com/charmbracelet/bubbletea v1.2.4 // indirect
+	github.com/charmbracelet/x/ansi v0.5.2 // indirect
+	github.com/charmbracelet/x/exp/strings v0.0.0-20241203170811-1f0219946599 // indirect
 	github.com/charmbracelet/x/term v0.2.1 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
@@ -39,7 +39,7 @@ require (
 
 require (
 	github.com/charmbracelet/huh v0.6.0
-	github.com/charmbracelet/huh/spinner v0.0.0-20241112234317-16963471bda6
+	github.com/charmbracelet/huh/spinner v0.0.0-20241127125741-aad810dfbce6
 	github.com/cpuguy83/go-md2man/v2 v2.0.5 // indirect
 	github.com/ctreminiom/go-atlassian v1.6.1
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect

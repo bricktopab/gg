@@ -68,7 +68,7 @@ func main() {
 			{
 				Name:    "issue",
 				Aliases: []string{"i"},
-				Usage:   "Looks up one of your issues and creates a local branch",
+				Usage:   "Looks up one of your issues and creates/switches a local branch",
 				Action: func(cCtx *cli.Context) error {
 					gg.PickIssue()
 					return nil

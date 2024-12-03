@@ -23,7 +23,7 @@ type Jira interface {
 }
 
 type Git interface {
-	CreateLocalBranch(name string)
+	SwitchLocalBranch(name string)
 	GetBranchName() string
 	CreatePR() string
 	OpenPR(string)
@@ -38,7 +38,7 @@ func (g *GG) CreateIssue(name string, description string) {
 	g.Config.AddTask(task)
 
 	branchName := formatBranchName(task.IssueID, task.Title)
-	g.Git.CreateLocalBranch(branchName)
+	g.Git.SwitchLocalBranch(branchName)
 }
 
 var stripOddNameChars = regexp.MustCompile(`[^\w\-\.~]`)
@@ -54,7 +54,7 @@ func (g *GG) PickIssue() {
 	task := g.Gui.SelectTask(g.Jira.FindMyOpenIssues)
 	g.Config.AddTask(task)
 	branchName := formatBranchName(task.IssueID, task.Title)
-	g.Git.CreateLocalBranch(branchName)
+	g.Git.SwitchLocalBranch(branchName)
 }
 
 func (g *GG) CreatePR() {

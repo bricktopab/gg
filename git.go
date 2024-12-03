@@ -12,10 +12,14 @@ import (
 type ExternalGit struct {
 }
 
-func (g *ExternalGit) CreateLocalBranch(name string) {
-	output, err := exec.Command("git", "checkout", "-b", name).CombinedOutput()
+func (g *ExternalGit) SwitchLocalBranch(name string) {
+	// try switching first, then creating
+	_, err := exec.Command("git", "switch", name).CombinedOutput()
 	if err != nil {
-		log.Fatalf("Failed to create local branch: %s", output)
+		output, err := exec.Command("git", "switch", "-c", name).CombinedOutput()
+		if err != nil {
+			log.Fatalf("Failed to create local branch: %s, %s", output, err)
+		}
 	}
 }
 
