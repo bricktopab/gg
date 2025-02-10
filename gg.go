@@ -24,6 +24,7 @@ type Jira interface {
 
 type Git interface {
 	SwitchLocalBranch(name string)
+	ChangesInRemote() bool
 	GetBranchName() string
 	CreatePR() string
 	OpenPR(string)
@@ -63,6 +64,11 @@ func (g *GG) CreatePR() {
 	if taskID == "" {
 		log.Fatal("Current branch does not contain a task ID")
 	}
+
+	if !g.Git.ChangesInRemote() {
+		log.Fatal("Local changes need to be pushed first")
+	}
+
 	task := g.Config.GetTask(taskID)
 	title := g.Gui.AskForPRTitle(task)
 	g.Git.OpenPR(title)

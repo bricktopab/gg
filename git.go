@@ -35,6 +35,12 @@ func (g *ExternalGit) CreatePR() string {
 	return "-"
 }
 
+func (g *ExternalGit) ChangesInRemote() bool {
+	_, err := exec.Command("git", "branch", "--remote",
+		"--contains HEAD | grep -q origin/$(git branch --show-current)").CombinedOutput()
+	return err == nil
+}
+
 func (g *ExternalGit) OpenPR(title string) {
 	output, err := exec.Command("git", "remote", "get-url", "origin").CombinedOutput()
 	if err != nil {
