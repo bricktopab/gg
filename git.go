@@ -35,6 +35,12 @@ func (g *ExternalGit) CreatePR() string {
 	return "-"
 }
 
+func (g *ExternalGit) ChangesInRemote() bool {
+	// just check that branch has a remote
+	_, err := exec.Command("git", "rev-parse", "--abbrev-ref", "@{upstream}").CombinedOutput()
+	return err == nil
+}
+
 func (g *ExternalGit) OpenPR(title string) {
 	output, err := exec.Command("git", "remote", "get-url", "origin").CombinedOutput()
 	if err != nil {
