@@ -82,9 +82,13 @@ func (j *JiraWrapper) CreateIssue(typeID string, title, description string) *cfg
 	}
 }
 
-func (j *JiraWrapper) FindMyOpenIssues() []cfg.Task {
-	jql := fmt.Sprintf(`project="%s" AND assignee = currentUser() AND 
-		statusCategory in ("To Do", "In Progress") order by updated DESC`, j.project)
+func (j *JiraWrapper) FindOpenIssues(onlyMine bool) []cfg.Task {
+	mine := "AND assignee is empty"
+	if onlyMine {
+		mine = "AND assignee = currentUser()"
+	}
+	jql := fmt.Sprintf(`project="%s"  %s AND 
+		statusCategory in ("To Do", "In Progress") order by updated DESC`, j.project, mine)
 	issues, _, err := j.client.Issue.Search.Get(
 		context.Background(),
 		jql,

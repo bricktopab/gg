@@ -109,25 +109,51 @@ func (g *Gui) AskForIssueDetails(preTitle, preDesc string, typesFn func() map[st
 	return issueTypeID, types[issueTypeID], title, description
 }
 
-func (g *Gui) SelectTask(fetch func() []cfg.Task) *cfg.Task {
+func (g *Gui) SelectTask(fetch func(bool) []cfg.Task) *cfg.Task {
 	var task cfg.Task
 
-	var options []huh.Option[cfg.Task]
-	_ = spinner.New().Title("Asking JIRA for issues...").Action(
-		func() {
-			tasks := fetch()
-			for _, t := range tasks {
-				options = append(options, huh.NewOption(t.IssueID+" "+t.Title, t))
-			}
-		},
-	).Run()
+	reloadDummyTask := cfg.Task{
+		Type: "dummy-all",
+	}
 
+	loadIssuesWithSpinner := func(mine bool) []huh.Option[cfg.Task] {
+		var options []huh.Option[cfg.Task]
+		_ = spinner.New().Title("Asking JIRA for issues...").Action(
+			func() {
+				tasks := fetch(mine)
+				for _, t := range tasks {
+					options = append(options, huh.NewOption(t.IssueID+" "+t.Title, t))
+				}
+				assigned := "unassigned"
+				if !mine {
+					assigned = "my issues"
+				}
+				options = append(options,
+
+					huh.NewOption(
+						fmt.Sprintf("...fetch %s", assigned),
+						reloadDummyTask),
+				)
+			},
+		).Run()
+		return options
+	}
+
+	toggleMine := true
 	form := huh.NewForm(
 		huh.NewGroup(
 			huh.NewSelect[cfg.Task]().
 				Title("Choose a task to start working on").
-				Options(options...).
-				Value(&task),
+				OptionsFunc(func() []huh.Option[cfg.Task] { return loadIssuesWithSpinner(toggleMine) }, &toggleMine).
+				// Options(options...).
+				Value(&task).Validate(func(t cfg.Task) error {
+				// hackisk way to trigger reload
+				if t.Type == "dummy-all" {
+					toggleMine = !toggleMine
+					return errors.New("loading more..")
+				}
+				return nil
+			}),
 		),
 	)
 	err := form.Run()
