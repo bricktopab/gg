@@ -18,7 +18,7 @@ type Cli interface {
 type Gui interface {
 	AskForConfig() *cfg.Config
 	AskForIssueDetails(string, string, func() map[string]string) (string, string, string, string)
-	SelectTask(func() []cfg.Task) *cfg.Task
+	SelectTask(func(bool) []cfg.Task) *cfg.Task
 	AskForPRTitle(*cfg.Task) string
 	ShowSummary(string, string, string)
 }

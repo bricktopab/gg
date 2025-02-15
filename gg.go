@@ -18,7 +18,7 @@ type GG struct {
 
 type Jira interface {
 	CreateIssue(typeID string, name string, description string) *cfg.Task
-	FindMyOpenIssues() []cfg.Task
+	FindOpenIssues(onlyMine bool) []cfg.Task
 	GetIssueTypes() map[string]string
 }
 
@@ -52,7 +52,7 @@ func formatBranchName(taskID, title string) string {
 }
 
 func (g *GG) PickIssue() {
-	task := g.Gui.SelectTask(g.Jira.FindMyOpenIssues)
+	task := g.Gui.SelectTask(g.Jira.FindOpenIssues)
 	g.Config.AddTask(task)
 	branchName := formatBranchName(task.IssueID, task.Title)
 	g.Git.SwitchLocalBranch(branchName)
