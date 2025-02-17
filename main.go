@@ -40,7 +40,7 @@ func main() {
 			if err != nil {
 				log.Fatalf("Failed to load or create config: %v", err)
 			}
-			jira, err := NewJiraWrapper(config.JiraUser, config.JiraToken, config.JiraURL, config.JiraProject)
+			jira, err := NewJiraWrapperWithOldConfig(config.JiraUser, config.JiraToken, config.JiraURL, config.JiraProject)
 			if err != nil {
 				log.Fatalf("Failed to create Jira client: %v", err)
 			}
