@@ -28,6 +28,14 @@ type Config struct {
 	lock *sync.Mutex
 }
 
+type JiraConfig struct {
+	JiraUser      string  `yaml:"jira_user"`
+	JiraURL       string  `yaml:"jira_url"`
+	JiraToken     string  `yaml:"jira_token"`
+	JiraProject   string  `yaml:"jira_project"`
+	JiraAccountID *string `yaml:"jira_account_id"`
+}
+
 type AskForConfig func() *Config
 
 func NewConfg() Config {
