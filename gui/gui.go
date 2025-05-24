@@ -144,6 +144,7 @@ func (g *Gui) SelectTask(fetch func(bool) []cfg.Task) *cfg.Task {
 		huh.NewGroup(
 			huh.NewSelect[cfg.Task]().
 				Title("Choose a task to start working on").
+				Filtering(true).
 				OptionsFunc(func() []huh.Option[cfg.Task] { return loadIssuesWithSpinner(toggleMine) }, &toggleMine).
 				// Options(options...).
 				Value(&task).Validate(func(t cfg.Task) error {
