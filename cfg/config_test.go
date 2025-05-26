@@ -29,11 +29,21 @@ func createTempConfigFile(t *testing.T, content string) string {
 	// Override user home dir to point to our temp dir for the duration of the test
 	// so LoadOrCreateConfig and Save work with our temp file.
 	originalHomeDir, present := os.LookupEnv("HOME")
-	t.Setenv("HOME", tempDir)
+	if err := os.Setenv("HOME", tempDir); err != nil {
+		t.Fatalf("Failed to set HOME env var: %v", err)
+	}
 	if present {
-		t.Cleanup(func() { os.Setenv("HOME", originalHomeDir) })
+		t.Cleanup(func() {
+			if err := os.Setenv("HOME", originalHomeDir); err != nil {
+				t.Fatalf("Failed to restore HOME env var: %v", err)
+			}
+		})
 	} else {
-		t.Cleanup(func() { os.Unsetenv("HOME") })
+		t.Cleanup(func() {
+			if err := os.Unsetenv("HOME"); err != nil {
+				t.Fatalf("Failed to unset HOME env var: %v", err)
+			}
+		})
 	}
 
 	return tmpFile.Name()
@@ -97,13 +107,23 @@ func TestCreateNewConfig(t *testing.T) {
 	tempDir := t.TempDir()
 	// Override user home dir to point to our temp dir for the duration of the test
 	originalHomeDir, present := os.LookupEnv("HOME")
-	t.Setenv("HOME", tempDir)
-	if present {
-		t.Cleanup(func() { os.Setenv("HOME", originalHomeDir) })
-	} else {
-		t.Cleanup(func() { os.Unsetenv("HOME") })
+	if err := os.Setenv("HOME", tempDir); err != nil {
+		t.Fatalf("Failed to set HOME env var: %v", err)
 	}
-	
+	if present {
+		t.Cleanup(func() {
+			if err := os.Setenv("HOME", originalHomeDir); err != nil {
+				t.Fatalf("Failed to restore HOME env var: %v", err)
+			}
+		})
+	} else {
+		t.Cleanup(func() {
+			if err := os.Unsetenv("HOME"); err != nil {
+				t.Fatalf("Failed to unset HOME env var: %v", err)
+			}
+		})
+	}
+
 	// Ensure no config file exists initially
 	configFilePath := filepath.Join(tempDir, ".gg")
 	if _, err := os.Stat(configFilePath); !os.IsNotExist(err) {

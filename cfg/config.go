@@ -52,7 +52,7 @@ func NewConfg() Config {
 func LoadOrCreateConfig(askForConfig AskForConfig) (*Config, error) {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		return nil, fmt.Errorf("Failed to get home directory: %w", err)
+		return nil, fmt.Errorf("failed to get home directory: %w", err)
 	}
 
 	configPath := filepath.Join(homeDir, ".gg")
@@ -71,7 +71,7 @@ func LoadOrCreateConfig(askForConfig AskForConfig) (*Config, error) {
 			// Save will also ensure FormatVersion is currentFormatVersion
 			return newCfg, newCfg.Save()
 		}
-		return nil, fmt.Errorf("Failed to open config file: %w", err)
+		return nil, fmt.Errorf("failed to open config file: %w", err)
 	}
 	defer func() {
 		_ = file.Close()
@@ -89,7 +89,7 @@ func LoadOrCreateConfig(askForConfig AskForConfig) (*Config, error) {
 		// For this specific case, we might want to treat it as "not exist"
 		// and create a new one, but the current logic is to error out.
 		// For now, let's stick to the error.
-		return nil, fmt.Errorf("Failed to decode config file: %w", err)
+		return nil, fmt.Errorf("failed to decode config file: %w", err)
 	}
 
 	// After successful decode, handle versioning and ensure essential maps/locks
@@ -114,13 +114,13 @@ func (c *Config) Save() error {
 
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		return fmt.Errorf("Failed to get home directory: %w", err)
+		return fmt.Errorf("failed to get home directory: %w", err)
 	}
 
 	configPath := filepath.Join(homeDir, ".gg")
 	file, err := os.Create(configPath)
 	if err != nil {
-		return fmt.Errorf("Failed to create config file: %w", err)
+		return fmt.Errorf("failed to create config file: %w", err)
 	}
 	defer func() {
 		_ = file.Close()
@@ -128,7 +128,7 @@ func (c *Config) Save() error {
 
 	encoder := yaml.NewEncoder(file)
 	if err := encoder.Encode(c); err != nil {
-		return fmt.Errorf("Failed to encode config file: %w", err)
+		return fmt.Errorf("failed to encode config file: %w", err)
 	}
 
 	return nil
