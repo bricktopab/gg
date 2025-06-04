@@ -16,7 +16,7 @@ type Gui struct {
 }
 
 func (g *Gui) AskForConfig() *cfg.Config {
-	var cfg cfg.Config = cfg.NewConfg()
+	var cfg = cfg.NewConfg()
 	form := huh.NewForm(
 		huh.NewGroup(
 			huh.NewNote().Title("Welcome to gg!").
@@ -151,7 +151,7 @@ func (g *Gui) SelectTask(fetch func(bool) []cfg.Task) *cfg.Task {
 				// hackisk way to trigger reload
 				if t.Type == "dummy-all" {
 					toggleMine = !toggleMine
-					return errors.New("loading more..")
+					return errors.New("loading more")
 				}
 				return nil
 			}),

@@ -91,7 +91,7 @@ tasks: {}
 	if loadedCfg.lock == nil {
 		loadedCfg.lock = &sync.Mutex{}
 	}
-	
+
 	err = loadedCfg.Save()
 	if err != nil {
 		t.Fatalf("Save failed: %v", err)
@@ -157,7 +157,7 @@ func TestCreateNewConfig(t *testing.T) {
 	if createdCfg.FormatVersion != testCurrentFormatVersion {
 		t.Errorf("Expected FormatVersion to be %d for new config, got %d", testCurrentFormatVersion, createdCfg.FormatVersion)
 	}
-	
+
 	// Ensure lock is initialized
 	if createdCfg.lock == nil {
 		createdCfg.lock = &sync.Mutex{}
@@ -206,7 +206,7 @@ tasks: {}
 	if loadedCfg.lock == nil {
 		loadedCfg.lock = &sync.Mutex{}
 	}
-	
+
 	err = loadedCfg.Save()
 	if err != nil {
 		t.Fatalf("Save failed: %v", err)
